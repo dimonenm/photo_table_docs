@@ -14,9 +14,9 @@ export default function Header({ active }: HeaderProps): JSX.Element {
     const linksArr: JSX.Element[] = []
 
     if (activePage === 'home') {
-      linksArr.push(<Link href='/' key={'logo'} className={`${styles.logo} ${styles.active}`}>Photo Table Docs</Link>)
+      linksArr.push(<Link href='/' key={'logo'} className={`${styles.logo} ${styles.active}`}>Photo Table</Link>)
     } else {
-      linksArr.push(<Link href='/' key={'logo'} className={styles.logo}>Photo Table Docs</Link>)
+      linksArr.push(<Link href='/' key={'logo'} className={styles.logo}>Photo Table</Link>)
     }
     if (activePage === 'docs') {
       linksArr.push(<Link href='/docs' key={'docs'} className={`${styles.docs} ${styles.active}`}>Docs</Link>)
