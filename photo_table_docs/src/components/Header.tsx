@@ -1,55 +1,43 @@
 import Link from 'next/link'
 import styles from './Header.module.scss'
 
-interface HeaderProps {
+interface IHeaderProps {
   active: string
 }
+interface INavLinks {
+  id: number
+  title: string
+  path: string
+  classStyle: string
+  classStyleActive: string
+}
 
-export default function Header({ active }: HeaderProps): JSX.Element {
+const navLinks: INavLinks[] = [
+  { id: 1, title: 'Photo Table', path: '/', classStyle: 'logo', classStyleActive: 'logo_active' },
+  { id: 2, title: 'Docs', path: '/docs', classStyle: 'docs', classStyleActive: 'docs_active' },
+  { id: 3, title: 'Blog', path: '/blog', classStyle: 'blog', classStyleActive: 'blog_active' },
+  { id: 4, title: 'Download', path: '/download', classStyle: 'download', classStyleActive: 'download_active' },
+  { id: 5, title: '', path: '', classStyle: '', classStyleActive: '' },
+  { id: 6, title: 'Feedback', path: '/feedback', classStyle: 'feedback', classStyleActive: 'feedback_active' },
+]
 
-  function getMenuLinks(activePage: string): JSX.Element[] {
+export default function Header({ active }: IHeaderProps): JSX.Element {
 
-    const linksArr: JSX.Element[] = []
+  const menuItems: JSX.Element[] = navLinks.map(({ id, title, path, classStyle, classStyleActive }): JSX.Element => {
+    
+    const className = active === classStyle ? styles[classStyleActive] : styles[classStyle]
 
-    linksArr.push(<Link href='/' key={'logo'} className={styles.logo}>Photo Table</Link>)
-
-    linksArr.push(<Link href='/docs' key={'docs'} className={styles.docs}>Docs</Link>)
-
-    linksArr.push(<Link href='/blog' key={'blog'} className={styles.blog}>Blog</Link>)
-
-    linksArr.push(<Link href='/download' key={'download'} className={styles.download}>Download</Link>)
-
-    linksArr.push(<div></div>)
-
-    linksArr.push(<Link href='/feedback' key={'feedback'} className={styles.feedback}>Feedback</Link>)
-
-    switch (activePage) {
-      case 'docs':
-        linksArr[1] = <Link href='/docs' key={'docs'} className={styles.docs_active}>Docs</Link>
-        break;
-      case 'blog':
-        linksArr[2] = <Link href='/blog' key={'blog'} className={styles.blog_active}>Blog</Link>
-        break;
-      case 'download':
-        linksArr[3] = <Link href='/download' key={'download'} className={styles.download_active}>Download</Link>
-        break;
-      case 'feedback':
-        linksArr[5] = <Link href='/feedback' key={'feedback'} className={styles.feedback_active}>Feedback</Link>
-        break;
-
-      default:
-        break;
+    if (id === 5) {
+      return <div key={id}></div>
     }
 
-    return linksArr
-  }
-
-  const links: JSX.Element[] = getMenuLinks(active)
+    return <Link href={path ? path : '/'} key={id} className={className}>{title}</Link>
+  })
 
   return (
     <div className={styles.header}>
       <div className={styles.header_menu}>
-        {links}
+        {menuItems}
       </div>
     </div>
   )
